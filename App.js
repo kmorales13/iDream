@@ -73,7 +73,20 @@ export default class App extends Component {
 
   setAlarm(date) {
     let time = new Date(date.date);
-    AndroidClock.createAlarm('iDream1', time.getHours(), time.getMinutes());
+
+    ActionSheet.show(
+      {
+        options: ['1 Alarm', '2 Alarms', '3 Alarms'],
+        cancelButtonIndex: 3,
+        title: 'How many alarms?'
+      },
+      buttonIndex => {
+        for(let x = 0; x < buttonIndex+1; x++) {
+          AndroidClock.createAlarm('iDream' + (x + 1) , time.getHours(), time.getMinutes() + (x * 5));
+        }
+      }
+    )
+    
   }
 
   renderNow(times) {
